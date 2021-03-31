@@ -1,0 +1,8 @@
+body {
+  overflow-x: hidden;
+  background: url('bg.jpg') center center no-repeat;
+  background-repeat: no-repeat;
+  background-size: cover;
+  font-size: 16px;
+  height: 100%;	
+}
