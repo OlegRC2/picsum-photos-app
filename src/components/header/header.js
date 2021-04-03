@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import {Link} from 'react-router-dom';
 
 const HeaderBlock = styled.div`
     display: flex;
@@ -14,6 +15,13 @@ const HeaderTitle = styled.h1`
     font-size: 30px;
     color: #fff;
     margin: 0;
+    a {
+        color: #fff;
+        text-decoration: none;
+    }
+    a:hover {
+        text-decoration: none;
+    }
 `;
 const HeaderSubTitle = styled.h2`
     font-size: 17px;
@@ -32,6 +40,13 @@ const HeaderLinks = styled.ul`
         margin-right: 20px;
         font-size: 18px;
         cursor: pointer;
+        a {
+        color: #fff;
+        text-decoration: none;
+    }
+        a:hover {
+            text-decoration: none;
+        }
     }
     li:hover {
         font-size: 22px;
@@ -43,13 +58,15 @@ const Header = () => {
         <HeaderBlock>
 
             <HeaderTitleWrapper>
-                <HeaderTitle>Picsum photos app</HeaderTitle>
+                <HeaderTitle>
+                    <Link to='/'>Picsum photos app</Link>
+                </HeaderTitle>
                 <HeaderSubTitle>Get a random image </HeaderSubTitle>
             </HeaderTitleWrapper>
 
             <HeaderLinks>
                 <li>
-                    Get image by id 
+                    <Link to='/get-img-by-id'>Get image by id </Link>
                 </li>
                 <li>
                     Set image size 
