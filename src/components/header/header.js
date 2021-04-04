@@ -71,9 +71,6 @@ const Header = () => {
                 <li>
                     Set image size 
                 </li>
-                <li>
-                    Many images  
-                </li>
             </HeaderLinks>
 
         </HeaderBlock>

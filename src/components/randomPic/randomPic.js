@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import picService from '../services/picService';
 import Spinner from '../spinner';
+import ErrorMessage from '../errorMessage';
 import './randomPic.scss';
 
 
@@ -50,12 +51,27 @@ export default class RandomPic extends Component {
 
         const { url, loading, error } = this.state;
 
-        const content = <img className="random-img" src={url}></img>;
+        let id = 0; 
+
+        if (url) {                                                              // если url передан
+            const urlId = url.match(/\d+/g);                                    // вырезаем из url все цифры
+            id = +urlId[0].replace(/\D/g, '');                                  // из получившегося массива берем первый элемент - это id изображения
+        }
+        
+
+        const errorMessage = error ? <ErrorMessage/> : null;                    // если возникла ошибка, то создаем компонент с ошибкой (из импортированного файла)
 
         const spinner = loading ? <Spinner/> : null;                            // если loading true, создаем компонент со спиннером
 
+        const content = 
+            <>
+                <img className="random-img" src={url}></img>
+                <div className="random-img_id">Image id: {id}</div>
+            </>
+
         return (
             <div className="random-block">
+                {errorMessage}
                 {spinner}
                 {content}
             </div>

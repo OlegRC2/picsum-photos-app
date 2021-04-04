@@ -19,7 +19,7 @@ export default class picService {
             return await res;
 
         } else {
-            const res = await fetch(`${this._apiBase}${id}/${width}/${height}`);
+            const res = await fetch(`${this._apiBase}/id/${id}/${width}/${height}`);
 
             fetchError(res);
 

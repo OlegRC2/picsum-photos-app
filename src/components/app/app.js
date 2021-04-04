@@ -20,11 +20,11 @@ export default class App extends Component {
 					<Switch>
 						<>
 							<Container>
-								<Row>
-									<Col lg={{size: 7, offset: 0}}>
+								<Row className="justify-content-between">
+									<Col lg={{size: 5}}>
 										<Route path='/' exact component={RandomPic}/>
 									</Col>
-									<Col lg={{size: 5, offset: 0}}>
+									<Col lg={{size: 5}}>
 										<Route path='/' exact component={RandomPic}/>
 									</Col>
 								</Row>
