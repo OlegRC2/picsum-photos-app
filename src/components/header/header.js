@@ -34,7 +34,6 @@ const HeaderLinks = styled.ul`
     align-items: center;
     color: #fff;
     list-style-type: none;
-    /* font-family: 'Cantarell'; */
     li {
         font-family: 'New Tegomin', serif;
         margin-right: 20px;

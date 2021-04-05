@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Col, Row, Container} from 'reactstrap';
 import { Button } from 'reactstrap';
 import picService from '../services/picService';
+import ImgInfo from '../ImgInfo';
 import Spinner from '../spinner';
 import ErrorMessage from '../errorMessage';
 
@@ -16,7 +17,8 @@ export default class ImgById extends Component {
     state = {                                                                
         url: null,                                                               // изначально ставим пустой объект, т.к. при создании класса туда запишется Url рандомного изображения
         loading: false,                                                          // свойство для показа спиннера
-        error: false
+        error: false,
+        id: undefined
     }
 
     onGetImg = () => {
@@ -26,14 +28,15 @@ export default class ImgById extends Component {
         if (idInput.value && idInput.value != 0) {
 
             this.setState({
-                loading: true,                                                     // при нажатии кнопки выводим спиннер
+                loading: true,                                                   // при нажатии кнопки выводим спиннер
+                id: idInput.value
             })
 
-            this.picService.getIdImg(400, 300, idInput.value)              // функция выдаст уже трансформированный объект, трансформация в файле picService
+            this.picService.getIdImg(400, 300, idInput.value)                    // функция выдаст уже трансформированный объект, трансформация в файле picService
             .then((res) => {
                 this.onPicLoaded(res);
                 idInput.value = '';
-            })                                                                  // обрабатываем вернувшийся промис и устанавливаем state
+            })                                                                   // обрабатываем вернувшийся промис и устанавливаем state
             .catch((res) => {
                 this.onError(res);
                 idInput.value = '';
@@ -44,18 +47,19 @@ export default class ImgById extends Component {
         }
     }
 
-    onPicLoaded = (url) => {                                                    // функция устанавливающая state
+    onPicLoaded = (url) => {                                                     // функция устанавливающая state
         this.setState({
             url,
-            loading: false,                                                     // после загрузки ставим сюда false чтобы не показывать спиннер
-            error: false                                                        // свойство на случай ошибок
+            loading: false,                                                      // после загрузки ставим сюда false чтобы не показывать спиннер
+            error: false                                                         // свойство на случай ошибок
         })
     }
 
     onError = (err) => {
         this.setState({
             error: true,
-            loading: false
+            loading: false,
+            id: undefined
         })
     }
 
@@ -63,17 +67,17 @@ export default class ImgById extends Component {
 
         const { url, loading, error } = this.state;
 
-        const errorMessage = error ? <ErrorMessage/> : null;                // если возникла ошибка, то создаем компонент с ошибкой (из импортированного файла)
+        const errorMessage = error ? <ErrorMessage/> : null;                     // если возникла ошибка, то создаем компонент с ошибкой (из импортированного файла)
 
-        const spinner = loading ? <Spinner/> : null;                            // если loading true, создаем компонент со спиннером
+        const spinner = loading ? <Spinner/> : null;                             // если loading true, создаем компонент со спиннером
 
         const content = (!loading && !error) ? <img className="random-img" src={url}></img> : undefined;
 
         return (
             <>
                 <Container>
-                    <Row>
-                        <Col lg={{size: 7, offset: 0}}>
+                    <Row className="justify-content-between">
+                        <Col lg={{size: 5, offset: 0}}>
                             
                             <div className="form-id_title">Enter image id</div>
                             <input className="form-id_input" type="number" placeholder="1-1084"></input>
@@ -93,6 +97,10 @@ export default class ImgById extends Component {
                             </div>  
                         </Col>
                     </Row>
+
+                    <ImgInfo
+                        idImg={this.state.id}/>
+                     
                 </Container>
             </>
         )
