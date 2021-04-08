@@ -17,11 +17,12 @@ export default class ImgById extends Component {
     state = {                                                                
         url: null,                                                               // изначально ставим пустой объект, т.к. при создании класса туда запишется Url рандомного изображения
         loading: false,                                                          // свойство для показа спиннера
-        error: false,
+        error: false,   
+        noChoise: true,                                                          // изображение не выбрано - ничего не показываем
         id: undefined
     }
 
-    onGetImg = () => {
+    onGetImgById = () => {
 
         const idInput = document.querySelector('.form-id_input');
 
@@ -51,7 +52,8 @@ export default class ImgById extends Component {
         this.setState({
             url,
             loading: false,                                                      // после загрузки ставим сюда false чтобы не показывать спиннер
-            error: false                                                         // свойство на случай ошибок
+            error: false,                                                         // свойство на случай ошибок
+            noChoise: false
         })
     }
 
@@ -59,19 +61,20 @@ export default class ImgById extends Component {
         this.setState({
             error: true,
             loading: false,
-            id: undefined
+            id: undefined,
+            noChoise: true
         })
     }
 
     render() {
 
-        const { url, loading, error } = this.state;
+        const { url, loading, error, noChoise } = this.state;
 
         const errorMessage = error ? <ErrorMessage/> : null;                     // если возникла ошибка, то создаем компонент с ошибкой (из импортированного файла)
 
         const spinner = loading ? <Spinner/> : null;                             // если loading true, создаем компонент со спиннером
 
-        const content = (!loading && !error) ? <img className="random-img" src={url}></img> : undefined;
+        const content = !(noChoise) ? <img className="random-img" src={url} alt="img by id"></img> : undefined;
 
         return (
             <>
@@ -85,7 +88,7 @@ export default class ImgById extends Component {
                                 color="primary" 
                                 className="btn btn-primary form-id_btn" 
                                 type="button"
-                                onClick={this.onGetImg}>Get image</Button>
+                                onClick={this.onGetImgById}>Get image</Button>
                                         
                         </Col>
 

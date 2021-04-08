@@ -68,7 +68,7 @@ const Header = () => {
                     <Link to='/get-img-by-id'>Get image by id </Link>
                 </li>
                 <li>
-                    Set image size 
+                    <Link to='/set-img-size'>Set image size</Link> 
                 </li>
             </HeaderLinks>
 

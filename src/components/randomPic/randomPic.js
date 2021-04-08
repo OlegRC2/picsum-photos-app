@@ -12,7 +12,8 @@ export default class RandomPic extends Component {
     state = {                                                                
         url: null,                                                              // изначально ставим пустой объект, т.к. при создании класса туда запишется Url рандомного изображения
         loading: true,                                                          // свойство для показа спиннера
-        error: false
+        error: false,
+        noChoise: true,                                                         // изображение не выбрано - ничего не показываем
     }
 
     componentDidMount() {                                                       // вызывается, когда компонент успешно отрисован
@@ -30,14 +31,16 @@ export default class RandomPic extends Component {
         this.setState({
             url,
             loading: false,                                                     // после загрузки ставим сюда false чтобы не показывать спиннер
-            error: false                                                        // свойство на случай ошибок
+            error: false,                                                       // свойство на случай ошибок
+            noChoise: false
         })
     }
 
     onError = (err) => {
         this.setState({
             error: true,
-            loading: false
+            loading: false,
+            noChoise: true
         })
     }
 
@@ -49,7 +52,7 @@ export default class RandomPic extends Component {
 
     render() {
 
-        const { url, loading, error } = this.state;
+        const { url, loading, error, noChoise } = this.state;
 
         let id = 0; 
 
@@ -63,11 +66,11 @@ export default class RandomPic extends Component {
 
         const spinner = loading ? <Spinner/> : null;                            // если loading true, создаем компонент со спиннером
 
-        const content = 
+        const content = !(noChoise) ?
             <>
-                <img className="random-img" src={url}></img>
+                <img className="random-img" src={url} alt="random"></img>
                 <div className="random-img_id">Image id: {id}</div>
-            </>
+            </> : undefined;
 
         return (
             <div className="random-block">

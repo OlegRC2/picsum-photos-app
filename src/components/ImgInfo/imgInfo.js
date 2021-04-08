@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Col, Row, Container} from 'reactstrap';
-import { Button } from 'reactstrap';
+import {Col, Row} from 'reactstrap';
 import picService from '../services/picService';
 
 import './imgInfo.scss';
@@ -11,7 +10,7 @@ export default class ImgInfo extends Component {
     picService = new picService();
 
     state = {
-        info: null
+        info: {}
     }
 
     componentDidMount() {                                                       // вызывается, когда компонент успешно отрисован
@@ -24,10 +23,31 @@ export default class ImgInfo extends Component {
         }
     }
 
+    newInfo = (info) => {
+        this.setState({
+            info
+        })
+    }
+
+    updateInfo() {
+        const {idImg} = this.props;
+       
+        if (!idImg) {                                                          // если переменная не передана, то ничего не делаем
+            this.setState({
+                info: {}
+            })
+            return;
+        }
+
+        this.picService.getImgInfo(idImg)
+            .then(this.newInfo)                                               // обрабатываем вернувшийся промис и устанавливаем state
+            .catch( () => console.log('err'));
+    }
 
     render() {
 
-        const {idImg} = this.props;
+        const {info} = this.state;
+        const {id, author, width, height, download_url} = info;
 
         return (
 
@@ -36,22 +56,19 @@ export default class ImgInfo extends Component {
                     <div className="info_title">Image information</div>
                     <ul className="info_img">
                         <li>
-                            Image id: {idImg}
+                            Image id: {id}
                         </li>
                         <li>
-                            Autor: 111
+                            Autor: {author}
                         </li>
                         <li>
-                            Width: 111
+                            Width: {width}
                         </li>
                         <li>
-                            Height: 111
+                            Height: {height}
                         </li>
                     </ul>
-                    <Button 
-                        color="primary" 
-                        className="btn btn-primary info_btn" 
-                        type="button">Download</Button>
+                    <a href={download_url} className="btn btn-primary" download target="_blank" rel="noreferrer">Download</a>
                 </Col>
             </Row>
         )    

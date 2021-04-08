@@ -1,0 +1,39 @@
+.set-size {
+    &_title {
+        font-family: 'New Tegomin', serif;
+        font-size: 30px;
+        color: #fff;
+        margin-top: 40px;
+        text-align: center;
+    }
+    &_width {
+        margin-top: 50px;
+    }
+    &_heigth {
+        margin-top: 20px;
+    }
+    &_title-input {
+        font-family: 'New Tegomin', serif;
+        font-size: 24px;
+        color: #fff;
+    }
+    &_input {
+        margin-top: 20px;
+        border-radius: 20px;
+        border: none;
+        display: block;
+        padding-left: 10px;
+    }
+    &_btn {
+        margin-top: 30px;
+    }
+    &_btn-download {
+        margin-top: 30px;
+        margin-left: 20px;
+    }
+}
+.img-block {
+    text-align: center;
+    margin-top: 50px;
+    max-height: 800px;
+}

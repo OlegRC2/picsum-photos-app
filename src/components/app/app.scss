@@ -1,0 +1,22 @@
+body {
+	overflow-x: hidden;
+	background: url('bg.jpg') center center no-repeat;
+	background-repeat: no-repeat;
+	background-size: cover;
+	font-size: 16px;
+	height: 100%;	
+}
+.main_title {
+	font-family: 'New Tegomin', serif;
+	font-size: 30px;
+	color: #fff;
+	margin-top: 40px;
+	text-align: center;
+	&:nth-child(3) {
+		display: inline-block;
+		margin-top: 20px;
+		position: absolute;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}

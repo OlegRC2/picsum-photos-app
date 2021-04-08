@@ -27,6 +27,21 @@ export default class picService {
         }
     }
 
+    getResourseInfo = async (id) => {                                                            // получаем информацию об изображении
+
+        function fetchError(obj) {
+            if (!obj.ok) {
+                throw new Error(`Could not fetch, status: ${obj.status}`);
+            }
+        }
+
+        let res = await fetch(`${this._apiBase}id/${id}/info`);
+
+        fetchError(res);
+
+        return await res.json();
+    }
+
     getRandomImg = async (width, height) => {                                               // получаем рандомное изображение
         const random = await this.getResourse(width, height);     
         return this._transrormUrlImg(random);                                               // из ответа берем только url
@@ -42,19 +57,9 @@ export default class picService {
         return this._transrormUrlImg(idImg);
     }
 
-    getImgInfo = async (id) => {                                                            // получаем информацию об изображении
-
-        function fetchError(obj) {
-            if (!obj.ok) {
-                throw new Error(`Could not fetch, status: ${obj.status}`);
-            }
-        }
-
-        const res = await fetch(`${this._apiBase}id/${id}/info`);
-
-        fetchError(res);
-
-        return await this._transrormImgInfo(res);
+    getImgInfo = async (id) => {                                                            // получаем инфу об изображении
+        const info = await this.getResourseInfo(id);
+        return this._transrormImgInfo(info);
     }
 
     _transrormImgInfo = (imgObj) => {                                                        // вытаскиваем url из ответа сервера
@@ -65,10 +70,9 @@ export default class picService {
         return {
             id: imgObj.id,
             author: imgObj.author,
-            width: imgObj.width,
-            height: imgObj.height,
+            width: imgObj.width + ' px',
+            height: imgObj.height + ' px',
             download_url: imgObj.download_url
         }
     }
-    
 }
